@@ -7,25 +7,25 @@ import {
 import { Input as InputComponent } from "@heroui/input";
 
 interface IInput {
-  control: Control;
-  rules: RegisterOptions;
-  error: FieldError;
+  // control: Control;
+  rules?: RegisterOptions;
+  // error: FieldError;
   name: string;
   label?: string;
   placeholder?: string;
 }
 
 export const Input = ({
-  control,
+  // control,
   rules,
-  error,
+  // error,
   name,
   label,
   placeholder,
 }: IInput) => {
   return (
     <Controller
-      control={control}
+      // control={control}
       rules={rules}
       name={name}
       render={({ field: { value, onChange } }) => (
@@ -35,7 +35,7 @@ export const Input = ({
           value={value}
           placeholder={placeholder}
           onValueChange={onChange}
-          errorMessage={error.message}
+          // errorMessage={error.message}
         />
       )}
     />

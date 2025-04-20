@@ -7,31 +7,27 @@ import {
 import { Select as SelectComponent, SelectItem } from "@heroui/react";
 
 interface ISelect {
-  control: Control;
-  rules: RegisterOptions;
-  error: FieldError;
+  // control: Control;
+  rules?: RegisterOptions;
+  // error: FieldError;
   name: string;
   label?: string;
-  options: Record<string, any>[];
-  key?: string;
-  displayValue?: string;
+  options: string[];
   placeholder?: string;
 }
 
 export const Select = ({
-  control,
+  // control,
   rules,
-  error,
+  // error,
   name,
   label,
   options,
-  key = "id",
-  displayValue = "id",
   placeholder,
 }: ISelect) => {
   return (
     <Controller
-      control={control}
+      // control={control}
       rules={rules}
       name={name}
       render={({ field: { value, onChange } }) => (
@@ -41,11 +37,11 @@ export const Select = ({
           value={value}
           placeholder={placeholder}
           selectionMode="multiple"
-          errorMessage={error.message && error.message}
+          // errorMessage={error.message && error.message}
           onSelectionChange={onChange}
         >
-          {options.map((option) => (
-            <SelectItem key={option[key]}>{option[displayValue]}</SelectItem>
+          {options.map((option, index) => (
+            <SelectItem key={index}>{option}</SelectItem>
           ))}
         </SelectComponent>
       )}

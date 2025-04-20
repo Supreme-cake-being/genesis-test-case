@@ -8,7 +8,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <HeroUIProvider>
-      <Component {...pageProps} />
+      <div className="container">
+        <Component {...pageProps} />
+      </div>
     </HeroUIProvider>
   );
 }

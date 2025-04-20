@@ -1,41 +1,57 @@
 import {
   Button,
-  Table,
+  Table as TableComponent,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
   TableRow,
 } from "@heroui/react";
-// import { Modal } from "./Modal";
+import { DeleteButton, EditButton } from "./IconButtons";
+import { CreateModal } from "../CreateModal";
+import { EditModal } from "../EditModal";
+import { DeleteModal } from "../DeleteModal";
 
 interface ITable {
+  tableInstance: string;
   createButtonText: string;
   columns: string[];
   data: Record<string, any>[];
 }
 
-export const TableComponent = ({
+export const Table = ({
+  tableInstance,
   createButtonText = "Create",
   columns,
   data = [],
 }: ITable) => {
   return (
-    <div className="flex justify-center">
-      <Button>{createButtonText}</Button>
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-end">
+        <CreateModal />
+      </div>
 
-      <Table>
+      <TableComponent aria-label={`${tableInstance} table`}>
         <TableHeader>
           {columns.map((column) => (
-            <TableColumn key={column}>{column}</TableColumn>
+            <TableColumn key={column} className="capitalize">
+              {column}
+            </TableColumn>
           ))}
         </TableHeader>
         <TableBody>
           {data?.map(({ id, ...row }) => (
             <TableRow key={id}>
               {columns.map((col) => {
-                if (col === "Actions")
-                  return <TableCell key={col}>{displayValue}</TableCell>;
+                if (col === "actions")
+                  return (
+                    <TableCell key={col}>
+                      <div className="flex gap-2">
+                        <EditModal />
+                        <DeleteModal trackName={row.title} />
+                      </div>
+                    </TableCell>
+                  );
 
                 const cellValue = row[col];
                 const displayValue = Array.isArray(cellValue)
@@ -46,7 +62,7 @@ export const TableComponent = ({
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </TableComponent>
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import { Button, Tooltip } from "@heroui/react";
 import { FC } from "react";
 
-export const EditButton: FC<{ instance: string; onPress: () => void }> = ({
-  instance,
+export const EditButton: FC<{ text: string; onPress: () => void }> = ({
+  text,
   onPress,
 }) => {
   return (
     <Button onPress={onPress} isIconOnly>
-      <Tooltip content={`Edit ${instance}`}>
+      <Tooltip content={text}>
         <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
           <svg
             aria-hidden="true"
@@ -49,13 +49,13 @@ export const EditButton: FC<{ instance: string; onPress: () => void }> = ({
   );
 };
 
-export const DeleteButton: FC<{ instance: string; onPress: () => void }> = ({
-  instance,
+export const DeleteButton: FC<{ text: string; onPress: () => void }> = ({
+  text,
   onPress,
 }) => {
   return (
     <Button onPress={onPress} isIconOnly>
-      <Tooltip content={`Delete ${instance}`}>
+      <Tooltip content={text}>
         <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
           <svg
             aria-hidden="true"

@@ -7,7 +7,7 @@ import {
 import { Select as SelectComponent, SelectItem } from "@heroui/react";
 
 interface ISelect {
-  // control: Control;
+  control: Control;
   rules?: RegisterOptions;
   // error: FieldError;
   name: string;
@@ -17,7 +17,7 @@ interface ISelect {
 }
 
 export const Select = ({
-  // control,
+  control,
   rules,
   // error,
   name,
@@ -27,7 +27,7 @@ export const Select = ({
 }: ISelect) => {
   return (
     <Controller
-      // control={control}
+      control={control}
       rules={rules}
       name={name}
       render={({ field: { value, onChange } }) => (

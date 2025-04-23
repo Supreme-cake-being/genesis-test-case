@@ -1,7 +1,6 @@
-import { Button, ModalBody, ModalFooter, ModalHeader } from "@heroui/react";
-import { Modal } from "./common/Modal";
-import { Form } from "./Form";
-import { DeleteButton } from "./common/IconButtons";
+import { Button, ModalBody, ModalFooter } from "@heroui/react";
+import { Modal } from "@/src/components/common/Modal";
+import { DeleteButton } from "@/src/components/common/IconButtons";
 
 interface IDeleteModal {
   trackName: string;

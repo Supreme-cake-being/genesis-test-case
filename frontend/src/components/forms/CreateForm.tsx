@@ -1,31 +1,15 @@
 import { Button, ModalFooter } from "@heroui/react";
-import { Input } from "./common/Input";
-import { Select } from "./common/Select";
+import { Input } from "@/src/components/common/Input";
+import { GenresSelect } from "@/src/components/GenresSelect";
 
 interface IForm {
   onClose: () => void;
 }
 
-export const Form = ({ onClose }: IForm) => {
-  const genres = [
-    "Rock",
-    "Pop",
-    "Hip Hop",
-    "Jazz",
-    "Classical",
-    "Electronic",
-    "R&B",
-    "Country",
-    "Folk",
-    "Reggae",
-    "Metal",
-    "Blues",
-    "Indie",
-  ];
-
+export const CreateForm = ({ onClose }: IForm) => {
   return (
     <form>
-      {/* <Input
+      <Input
         // control={control}
         rules={{ required: true }}
         // error={}
@@ -51,15 +35,7 @@ export const Form = ({ onClose }: IForm) => {
         placeholder="Enter album"
       />
 
-      <Select
-        // control={control}
-        rules={{ required: true }}
-        // error={}
-        name="genres"
-        label="Genres *"
-        options={genres}
-        placeholder="Select genres"
-      /> */}
+      {/* <GenresSelect /> */}
 
       <ModalFooter>
         <Button color="danger" variant="light" onPress={onClose}>

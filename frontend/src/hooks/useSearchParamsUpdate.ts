@@ -6,12 +6,14 @@ export const useSearchParamsUpdate = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearchParamsUpdate = (values: Record<string, string>) => {
+  const handleSearchParamsUpdate = (
+    values: Record<string, string | number>
+  ) => {
     const params = new URLSearchParams(searchParams);
 
     Object.entries(values).map(([param, value]) => {
       if (value) {
-        params.set(param, value);
+        params.set(param, `${value}`);
       } else {
         params.delete(param);
       }

@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import debounce from "lodash.debounce";
 import { Input, Select, SelectItem } from "@heroui/react";
 import { useGenres } from "@/src/hooks/useGenres";
-import { useSearchParamsUpdate } from "../hooks/useSearchParamsUpdate";
-import { useSearchParams } from "next/navigation";
+import { useSearchParamsUpdate } from "@/src/hooks/useSearchParamsUpdate";
 
 interface IFilters {
   fetchData: (params: Record<string, any>) => void;
@@ -12,7 +12,7 @@ interface IFilters {
 export const Filters = ({ fetchData }: IFilters) => {
   const searchParams = useSearchParams();
 
-  //Hydration state
+  // Hydration state
   const [hasHydrated, setHasHydrated] = useState(false);
 
   // Params state
@@ -22,7 +22,7 @@ export const Filters = ({ fetchData }: IFilters) => {
   const [genre, setGenre] = useState("");
   const [artist, setArtist] = useState("");
 
-  // Serach params update function
+  // Search params update function
   const { handleSearchParamsUpdate } = useSearchParamsUpdate();
 
   // Select options
@@ -30,10 +30,14 @@ export const Filters = ({ fetchData }: IFilters) => {
   const sortList = ["title", "artist", "album", "createdAt"];
   const orderList = ["asc", "desc"];
 
+  const limit = searchParams.get("limit");
+
+  // Awaiting hydration
   useEffect(() => {
     setHasHydrated(true);
   }, []);
 
+  // If hydrated, get search params and update the state
   useEffect(() => {
     if (!hasHydrated) return;
 
@@ -48,8 +52,20 @@ export const Filters = ({ fetchData }: IFilters) => {
     if (_search) setSearch(_search);
     if (_genre) setGenre(_genre);
     if (_artist) setArtist(_artist);
+
+    fetchData({
+      sort,
+      order,
+      search,
+      genre,
+      artist,
+      page: 1,
+      limit: limit || 10,
+    });
   }, [hasHydrated, searchParams]);
 
+  // If hydrated and filter values updated, make an api call
+  // If some parameter changed, reset page to 1
   useEffect(() => {
     if (!hasHydrated) return;
 
@@ -59,28 +75,35 @@ export const Filters = ({ fetchData }: IFilters) => {
       search,
       genre,
       artist,
+      page: 1,
+      limit: limit || 10,
     });
-    fetchData({ sort, order, search, genre, artist });
-    console.log("updated!!!");
+    fetchData({ sort, order, search, genre, artist, page: 1, limit });
   }, [sort, order, genre]);
 
-  // const debouncedSearch = debounce((val: string) => {
-  //   handleSearchParamsUpdate({ search: val });
-  //   fetchData({ sort, order, search: val, genre, artist });
-  // }, 400);
+  // Debounce for inputs
+  const debouncedInput = useCallback(
+    debounce((values) => {
+      handleSearchParamsUpdate(values);
+      fetchData(values);
+    }, 400),
+    []
+  );
 
-  // const debouncedArtist = debounce((val: string) => {
-  //   handleSearchParamsUpdate({ artist: val });
-  //   fetchData({ sort, order, search, genre, artist: val });
-  // }, 400);
-
-  // useEffect(() => {
-  //   debouncedSearch(search);
-  // }, [search]);
-
-  // useEffect(() => {
-  //   debouncedArtist(artist);
-  // }, [artist]);
+  // If hydrated, make an api call with delay
+  // If some parameter changed, reset page to 1
+  useEffect(() => {
+    if (!hasHydrated) return;
+    debouncedInput({
+      sort,
+      order,
+      search,
+      genre,
+      artist,
+      page: 1,
+      limit: limit || 10,
+    });
+  }, [search, artist]);
 
   return (
     <div className="flex w-full justify-center items-center gap-4">

@@ -31,7 +31,7 @@ export const Table = ({
   meta,
   fetchData,
 }: ITable) => {
-  const loadingState = loading || data?.length === 0 ? "loading" : "idle";
+  const loadingState = loading ? "loading" : "idle";
 
   return (
     <div className="flex flex-col gap-4">
@@ -51,7 +51,13 @@ export const Table = ({
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody loadingState={loadingState} loadingContent={<Spinner />}>
+        <TableBody
+          loadingState={loadingState}
+          loadingContent={<Spinner />}
+          emptyContent={
+            "No results match your filters. Try adjusting your search."
+          }
+        >
           {data?.map(({ id, ...row }) => (
             <TableRow key={id}>
               {columns.map((col) => {

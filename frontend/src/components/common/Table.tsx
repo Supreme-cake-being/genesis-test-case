@@ -1,37 +1,49 @@
 import {
-  Button,
   Table as TableComponent,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
   TableRow,
+  Spinner,
 } from "@heroui/react";
-import { DeleteButton, EditButton } from "./IconButtons";
-import { CreateModal } from "../CreateModal";
-import { EditModal } from "../EditModal";
-import { DeleteModal } from "../DeleteModal";
+import { Pagination } from "@/src/components/common/Pagination";
+import { CreateModal } from "../modals/CreateModal";
+import { EditModal } from "../modals/EditModal";
+import { DeleteModal } from "../modals/DeleteModal";
+import { IMeta } from "@/src/types/meta";
+import { Filters } from "../Filters";
 
 interface ITable {
   tableInstance: string;
-  createButtonText: string;
   columns: string[];
   data: Record<string, any>[];
+  loading: boolean;
+  meta: IMeta;
+  fetchData: (params: Record<string, any>) => void;
 }
 
 export const Table = ({
   tableInstance,
-  createButtonText = "Create",
   columns,
   data = [],
+  loading,
+  meta,
+  fetchData,
 }: ITable) => {
+  const loadingState = loading || data?.length === 0 ? "loading" : "idle";
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">
         <CreateModal />
       </div>
 
-      <TableComponent aria-label={`${tableInstance} table`}>
+      <TableComponent
+        aria-label={`${tableInstance} table`}
+        topContent={<Filters fetchData={fetchData} />}
+        bottomContent={<Pagination meta={meta} fetchData={fetchData} />}
+      >
         <TableHeader>
           {columns.map((column) => (
             <TableColumn key={column} className="capitalize">
@@ -39,7 +51,7 @@ export const Table = ({
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody loadingState={loadingState} loadingContent={<Spinner />}>
           {data?.map(({ id, ...row }) => (
             <TableRow key={id}>
               {columns.map((col) => {
@@ -47,7 +59,7 @@ export const Table = ({
                   return (
                     <TableCell key={col}>
                       <div className="flex gap-2">
-                        <EditModal />
+                        <EditModal slug={row.slug} />
                         <DeleteModal trackName={row.title} />
                       </div>
                     </TableCell>

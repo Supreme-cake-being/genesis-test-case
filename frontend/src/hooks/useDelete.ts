@@ -9,7 +9,7 @@ export const useDelete = (endpoint = "") => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await axios.delete(`/${endpoint}`);
+      await axios.delete(process.env.NEXT_PUBLIC_API + `/${endpoint}`);
     } catch (error) {
       setError(error as Record<string, any>);
     } finally {

@@ -16,6 +16,7 @@ import { IMeta } from "@/src/types/meta";
 import { Filters } from "../Filters";
 
 import FallBackImage from "@/public/fallback.webp";
+import { UploadModal } from "../modals/UploadModal";
 
 interface ITable {
   tableInstance: string;
@@ -108,6 +109,11 @@ export const Table = ({
                         <DeleteModal
                           id={id}
                           trackName={row.title}
+                          fetchData={fetchData}
+                        />
+                        <UploadModal
+                          id={id}
+                          slug={row.slug}
                           fetchData={fetchData}
                         />
                       </div>

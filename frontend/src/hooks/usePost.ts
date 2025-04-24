@@ -6,12 +6,16 @@ export const usePost = (endpoint = "") => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Record<string, any> | null>(null);
 
-  const handlePost = async (values: Record<string, any>) => {
+  const handlePost = async (
+    values: Record<string, any>,
+    headers?: Record<string, any>
+  ) => {
     setLoading(true);
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API + `${endpoint}`,
-        values
+        values,
+        headers
       );
       setData(response);
     } catch (error) {

@@ -9,8 +9,8 @@ interface ICreateTrack {
   coverImage?: string;
 }
 
-export const useCreateTrack = () => {
-  const { handlePost } = usePost("/tracks");
+export const useCreateTrack = (onSuccess: () => void) => {
+  const { error: requestError, handlePost } = usePost("/tracks");
 
   const {
     control,
@@ -26,20 +26,22 @@ export const useCreateTrack = () => {
     },
   });
 
-  const onSubmit = (values: ICreateTrack) => {
+  const onSubmit = async (values: ICreateTrack) => {
     const { title, artist, album, genres, coverImage } = values;
 
-    handlePost({
+    await handlePost({
       title,
       artist,
       album,
       genres: genres.split(","),
       coverImage,
     });
+    onSuccess();
   };
 
   return {
     control,
+    requestError,
     errors,
     isValid,
     isLoading,

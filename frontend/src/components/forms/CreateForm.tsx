@@ -6,10 +6,18 @@ import { ImageInput } from "../common/ImageInput";
 
 interface IForm {
   onClose: () => void;
+  fetchData: (params: Record<string, any>) => void;
 }
 
-export const CreateForm = ({ onClose }: IForm) => {
-  const { control, errors, isValid, handleSubmit, onSubmit } = useCreateTrack();
+export const CreateForm = ({ onClose, fetchData }: IForm) => {
+  const onSuccess = () => {
+    if (requestError) return;
+    onClose();
+    fetchData({ sort: "title", order: "asc", page: 1 });
+  };
+
+  const { control, requestError, errors, isValid, handleSubmit, onSubmit } =
+    useCreateTrack(onSuccess);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -49,6 +57,8 @@ export const CreateForm = ({ onClose }: IForm) => {
 
         <GenresSelect control={control} />
       </div>
+
+      {requestError && <p>{requestError.error}</p>}
 
       <ModalFooter>
         <Button color="danger" variant="light" onPress={onClose}>

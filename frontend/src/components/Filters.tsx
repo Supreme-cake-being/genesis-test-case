@@ -30,6 +30,7 @@ export const Filters = ({ fetchData }: IFilters) => {
   const sortList = ["title", "artist", "album", "createdAt"];
   const orderList = ["asc", "desc"];
 
+  const page = searchParams.get("page");
   const limit = searchParams.get("limit");
 
   // Awaiting hydration
@@ -59,7 +60,7 @@ export const Filters = ({ fetchData }: IFilters) => {
       search,
       genre,
       artist,
-      page: 1,
+      page,
       limit: limit || 10,
     });
   }, [hasHydrated, searchParams]);

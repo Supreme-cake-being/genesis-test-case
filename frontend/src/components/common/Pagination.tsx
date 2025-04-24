@@ -10,10 +10,9 @@ import { useSearchParamsUpdate } from "@/src/hooks/useSearchParamsUpdate";
 
 interface IPagination {
   meta: IMeta;
-  fetchData: (params: Record<string, any>) => void;
 }
 
-export const Pagination = ({ meta, fetchData }: IPagination) => {
+export const Pagination = ({ meta }: IPagination) => {
   const searchParams = useSearchParams();
 
   // Hydration state
@@ -50,7 +49,6 @@ export const Pagination = ({ meta, fetchData }: IPagination) => {
       page,
       limit,
     });
-    fetchData({ page, limit, sort, order, search, genre, artist });
   }, [page, limit]);
 
   const limitList = [10, 20, 30, 40, 50];

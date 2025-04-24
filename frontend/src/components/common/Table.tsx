@@ -36,8 +36,6 @@ export const Table = ({
 }: ITable) => {
   const loadingState = loading ? "loading" : "idle";
 
-  console.log(FallBackImage.src);
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">
@@ -47,7 +45,7 @@ export const Table = ({
       <TableComponent
         aria-label={`${tableInstance} table`}
         topContent={<Filters fetchData={fetchData} />}
-        bottomContent={<Pagination meta={meta} fetchData={fetchData} />}
+        bottomContent={<Pagination meta={meta} />}
       >
         <TableHeader>
           {columns.map((column) => (
@@ -66,7 +64,7 @@ export const Table = ({
           {data?.map(({ id, ...row }) => (
             <TableRow key={id}>
               {columns.map((col) => {
-                if (col === "coverImage") {
+                if (col === "coverImage")
                   return (
                     <TableCell key={col}>
                       <Image
@@ -76,6 +74,20 @@ export const Table = ({
                         height={100}
                         style={{ backgroundSize: "cover" }}
                       />
+                    </TableCell>
+                  );
+
+                if (col === "audioFile") {
+                  return (
+                    <TableCell key={col}>
+                      {row[col] ? (
+                        <audio controls className="w-full max-w-[200px]">
+                          <source src={row[col]} type="audio/mpeg" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      ) : (
+                        <span className="text-sm text-gray-500">No audio</span>
+                      )}
                     </TableCell>
                   );
                 }

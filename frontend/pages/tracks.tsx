@@ -8,6 +8,7 @@ const TracksPage = () => {
     "artist",
     "slug",
     "genres",
+    "audioFile",
     "createdAt",
     "updatedAt",
     "actions",

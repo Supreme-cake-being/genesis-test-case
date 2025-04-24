@@ -3,6 +3,8 @@ import {
   Controller,
   FieldError,
   RegisterOptions,
+  UseFormGetValues,
+  UseFormSetValue,
 } from "react-hook-form";
 import { Select as SelectComponent, SelectItem } from "@heroui/react";
 
@@ -22,7 +24,7 @@ export const Select = ({
   // error,
   name,
   label,
-  options,
+  options = [],
   placeholder,
 }: ISelect) => {
   return (
@@ -40,8 +42,8 @@ export const Select = ({
           // errorMessage={error.message && error.message}
           onSelectionChange={onChange}
         >
-          {options.map((option, index) => (
-            <SelectItem key={index}>{option}</SelectItem>
+          {options?.map((option) => (
+            <SelectItem key={option}>{option}</SelectItem>
           ))}
         </SelectComponent>
       )}

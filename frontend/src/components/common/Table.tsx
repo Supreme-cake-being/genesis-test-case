@@ -100,7 +100,11 @@ export const Table = ({
                   return (
                     <TableCell key={col}>
                       <div className="flex gap-2">
-                        <EditModal slug={row.slug} />
+                        <EditModal
+                          id={id}
+                          slug={row.slug}
+                          fetchData={fetchData}
+                        />
                         <DeleteModal
                           id={id}
                           trackName={row.title}

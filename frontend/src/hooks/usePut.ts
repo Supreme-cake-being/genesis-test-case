@@ -9,7 +9,10 @@ export const usePut = (endpoint = "") => {
   const handlePut = async (values: Record<string, any>) => {
     setLoading(true);
     try {
-      const response = await axios.put(`/${endpoint}`, values);
+      const response = await axios.put(
+        process.env.NEXT_PUBLIC_API + `${endpoint}`,
+        values
+      );
       setData(response);
     } catch (error) {
       setError(error as Record<string, any>);

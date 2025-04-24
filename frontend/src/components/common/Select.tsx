@@ -40,6 +40,7 @@ export const Select = ({
           value={field.value}
           placeholder={placeholder}
           selectionMode="multiple"
+          selectedKeys={field.value.split(",")}
           // errorMessage={error?.message}
           onSelectionChange={field.onChange}
         >

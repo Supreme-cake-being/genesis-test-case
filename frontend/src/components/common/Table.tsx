@@ -72,7 +72,6 @@ export const Table = ({
                         src={row[col] || FallBackImage.src}
                         width={100}
                         height={100}
-                        style={{ backgroundSize: "cover" }}
                       />
                     </TableCell>
                   );

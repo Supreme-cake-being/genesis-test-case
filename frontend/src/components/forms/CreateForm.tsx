@@ -1,47 +1,60 @@
 import { Button, ModalFooter } from "@heroui/react";
 import { Input } from "@/src/components/common/Input";
 import { GenresSelect } from "@/src/components/GenresSelect";
+import { useCreateTrack } from "@/src/hooks/useCreateTrack";
+import { ImageInput } from "../common/ImageInput";
 
 interface IForm {
   onClose: () => void;
 }
 
 export const CreateForm = ({ onClose }: IForm) => {
+  const { control, errors, isValid, handleSubmit, onSubmit } = useCreateTrack();
+
   return (
-    <form>
-      <Input
-        // control={control}
-        rules={{ required: true }}
-        // error={}
-        name="title"
-        label="Title *"
-        placeholder="Enter title"
-      />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-4">
+        <ImageInput
+          control={control}
+          name="coverImage"
+          label="Cover Image URL"
+          rules={{ required: true }}
+        />
 
-      <Input
-        // control={control}
-        rules={{ required: true }}
-        // error={}
-        name="artist"
-        label="Artist *"
-        placeholder="Enter artist"
-      />
+        <Input
+          control={control}
+          rules={{ required: true }}
+          // error={}
+          name="title"
+          label="Title *"
+          placeholder="Enter title"
+        />
 
-      <Input
-        // control={control}
-        // error={}
-        name="album"
-        label="Album"
-        placeholder="Enter album"
-      />
+        <Input
+          control={control}
+          rules={{ required: true }}
+          // error={}
+          name="artist"
+          label="Artist *"
+          placeholder="Enter artist"
+        />
 
-      {/* <GenresSelect /> */}
+        <Input
+          control={control}
+          // error={}
+          name="album"
+          label="Album"
+          placeholder="Enter album"
+        />
+
+        <GenresSelect control={control} />
+      </div>
 
       <ModalFooter>
         <Button color="danger" variant="light" onPress={onClose}>
           Close
         </Button>
-        <Button color="primary" type="submit">
+        <Button color="primary" type="submit" disabled={!isValid}>
           Submit
         </Button>
       </ModalFooter>

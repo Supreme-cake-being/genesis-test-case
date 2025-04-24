@@ -9,7 +9,10 @@ export const usePost = (endpoint = "") => {
   const handlePost = async (values: Record<string, any>) => {
     setLoading(true);
     try {
-      const response = await axios.post(`/${endpoint}`, values);
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API + `${endpoint}`,
+        values
+      );
       setData(response);
     } catch (error) {
       setError(error as Record<string, any>);

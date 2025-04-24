@@ -1,14 +1,13 @@
-import { Control, FieldError, RegisterOptions } from "react-hook-form";
+import { Control, FieldError } from "react-hook-form";
 import { useGenres } from "../hooks/useGenres";
 import { Select } from "./common/Select";
 
 interface IGenresSelect {
-  control: Control;
-  rules?: RegisterOptions;
-  error: FieldError;
+  control: Control<any>;
+  error?: FieldError;
 }
 
-export const GenresSelect = ({ control, rules, error }: IGenresSelect) => {
+export const GenresSelect = ({ control, error }: IGenresSelect) => {
   const { genres, loading, error: genresError } = useGenres();
 
   return (

@@ -32,15 +32,16 @@ export const Select = ({
       control={control}
       rules={rules}
       name={name}
-      render={({ field: { value, onChange } }) => (
+      render={({ field }) => (
         <SelectComponent
+          {...field}
           label={label}
           labelPlacement="inside"
-          value={value}
+          value={field.value}
           placeholder={placeholder}
           selectionMode="multiple"
-          // errorMessage={error.message && error.message}
-          onSelectionChange={onChange}
+          // errorMessage={error?.message}
+          onSelectionChange={field.onChange}
         >
           {options?.map((option) => (
             <SelectItem key={option}>{option}</SelectItem>

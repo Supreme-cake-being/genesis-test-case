@@ -25,7 +25,7 @@ export const useFetch = (endpoint = "") => {
     handleFetch();
   }, [endpoint]);
 
-  return { data: data?.data, loading, error };
+  return { data: data, loading, error };
 };
 
 export const useLazyFetch = (endpoint = "") => {

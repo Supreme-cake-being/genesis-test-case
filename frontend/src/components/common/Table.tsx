@@ -39,7 +39,7 @@ export const Table = ({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">
-        <CreateModal />
+        <CreateModal fetchData={fetchData} />
       </div>
 
       <TableComponent
@@ -101,7 +101,11 @@ export const Table = ({
                     <TableCell key={col}>
                       <div className="flex gap-2">
                         <EditModal slug={row.slug} />
-                        <DeleteModal trackName={row.title} />
+                        <DeleteModal
+                          id={id}
+                          trackName={row.title}
+                          fetchData={fetchData}
+                        />
                       </div>
                     </TableCell>
                   );

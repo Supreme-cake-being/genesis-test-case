@@ -9,8 +9,7 @@ export const useDelete = (endpoint = "") => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const response = await axios.delete(`/${endpoint}`);
-      setData(response);
+      await axios.delete(`/${endpoint}`);
     } catch (error) {
       setError(error as Record<string, any>);
     } finally {

@@ -7,6 +7,7 @@ export const useDelete = (endpoint = "") => {
   const [error, setError] = useState<Record<string, any> | null>(null);
 
   const handleDelete = async () => {
+    setLoading(true);
     try {
       const response = await axios.delete(`/${endpoint}`);
       setData(response);

@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 
-export const usePost = (endpoint = "", values: Record<string, any>) => {
+export const usePost = (endpoint = "") => {
   const [data, setData] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Record<string, any> | null>(null);
 
-  const handlePost = async () => {
+  const handlePost = async (values: Record<string, any>) => {
+    setLoading(true);
     try {
       const response = await axios.post(`/${endpoint}`, values);
       setData(response);

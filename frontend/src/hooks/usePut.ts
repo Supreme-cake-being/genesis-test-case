@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 
-export const usePut = (endpoint = "", values: Record<string, any>) => {
+export const usePut = (endpoint = "") => {
   const [data, setData] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Record<string, any> | null>(null);
 
-  const handlePut = async () => {
+  const handlePut = async (values: Record<string, any>) => {
+    setLoading(true);
     try {
       const response = await axios.put(`/${endpoint}`, values);
       setData(response);

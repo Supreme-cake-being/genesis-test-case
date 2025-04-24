@@ -3,6 +3,7 @@ import { useTracks } from "@/src/hooks/useTracks";
 
 const TracksPage = () => {
   const columns = [
+    "coverImage",
     "title",
     "artist",
     "slug",

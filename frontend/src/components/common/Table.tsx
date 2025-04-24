@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
   Spinner,
+  Image,
 } from "@heroui/react";
 import { Pagination } from "@/src/components/common/Pagination";
 import { CreateModal } from "../modals/CreateModal";
@@ -13,6 +14,8 @@ import { EditModal } from "../modals/EditModal";
 import { DeleteModal } from "../modals/DeleteModal";
 import { IMeta } from "@/src/types/meta";
 import { Filters } from "../Filters";
+
+import FallBackImage from "@/public/fallback.webp";
 
 interface ITable {
   tableInstance: string;
@@ -32,6 +35,8 @@ export const Table = ({
   fetchData,
 }: ITable) => {
   const loadingState = loading ? "loading" : "idle";
+
+  console.log(FallBackImage.src);
 
   return (
     <div className="flex flex-col gap-4">
@@ -61,6 +66,25 @@ export const Table = ({
           {data?.map(({ id, ...row }) => (
             <TableRow key={id}>
               {columns.map((col) => {
+                if (col === "coverImage") {
+                  return (
+                    <TableCell key={col}>
+                      <Image
+                        alt={`Cover for ${row.title}`}
+                        src={row[col] || FallBackImage.src}
+                        width={100}
+                        height={100}
+                        style={{ backgroundSize: "cover" }}
+                      />
+                    </TableCell>
+                  );
+                }
+
+                if (col === "createdAt" || col === "updatedAt") {
+                  const displayValue = new Date(row[col]).toLocaleString();
+                  return <TableCell key={col}>{displayValue}</TableCell>;
+                }
+
                 if (col === "actions")
                   return (
                     <TableCell key={col}>
